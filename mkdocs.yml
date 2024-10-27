@@ -1,0 +1,43 @@
+site_name: DDLCheck
+site_description: CLI tool to analyze SQL migrations for potential production database risks
+site_author: Oliver Rice
+
+repo_url: https://github.com/oliverrice/ddlcheck
+repo_name: oliverrice/ddlcheck
+
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.indexes
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Usage: usage.md
+  - Configuration: configuration.md
+  - Checks:
+    - Overview: checks/index.md
+    - Add Column: checks/add_column.md
+    - Alter Column Type: checks/alter_column_type.md
+    - Drop Column: checks/drop_column.md
+    - Create Index: checks/create_index.md
+    - Rename Column: checks/rename_column.md
+    - Set Not Null: checks/set_not_null.md
+    - Update Without Filter: checks/update_without_filter.md
+    - Drop Table: checks/drop_table.md
+    - Truncate: checks/truncate.md
+  - Development: development.md 

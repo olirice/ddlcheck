@@ -1,0 +1,9 @@
+# DDLCheck Configuration Example
+# Uncomment lines to activate them
+
+# Exclude specific checks
+#exclude=drop_table,truncate
+
+# Check-specific configuration options
+#create_index.minimum_rows=100000
+#alter_column_type.severity=HIGH 

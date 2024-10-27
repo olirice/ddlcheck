@@ -1,0 +1,55 @@
+[project]
+name = "ddlcheck"
+version = "0.1.0"
+description = "CLI tool to analyze SQL migrations for potential production database risks"
+authors = [
+    {name = "Oliver Rice",email = "github@oliverrice.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "typer (>=0.15.2,<0.16.0)",
+    "pglast (>=7.7,<8.0)",
+    "pytest (>=8.3.5,<9.0.0)",
+    "pre-commit (>=4.2.0,<5.0.0)",
+    "mkdocs (>=1.6.1,<2.0.0)",
+    "mkdocs-material (>=9.6.12,<10.0.0)",
+    "rich (>=14.0.0,<15.0.0)",
+    "toml (>=0.10.2,<0.11.0)"
+]
+
+[tool.poetry]
+packages = [{include = "ddlcheck", from = "src"}]
+
+[project.scripts]
+ddlcheck = "ddlcheck.cli:app"
+
+[tool.pytest]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.8"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+strict_optional = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
