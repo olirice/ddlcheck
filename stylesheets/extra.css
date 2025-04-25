@@ -1,0 +1,79 @@
+/* Terminal output styling */
+.terminal {
+  background-color: #121212;
+  color: #f8f8f2;
+  padding: 1em;
+  border-radius: 0.3em;
+  position: relative;
+  margin-bottom: 1em;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-family: "Roboto Mono", "SFMono-Regular", Consolas, Menlo, monospace;
+}
+
+/* Terminal heading */
+.terminal::before {
+  content: "Terminal";
+  position: absolute;
+  top: -0.8em;
+  left: 1em;
+  background-color: #2d2d2d;
+  padding: 0 0.5em;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+  color: #ddd;
+}
+
+/* Custom tables with better styling */
+.md-typeset table:not([class]) {
+  font-size: 0.9em;
+  border-radius: 0.3em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  font-weight: bold;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.025);
+}
+
+/* Better code blocks */
+.highlight {
+  border-radius: 0.3em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.highlight .filename {
+  background-color: #2d2d2d;
+  color: #ddd;
+  font-size: 0.8em;
+  padding: 0.3em 0.6em;
+  border-radius: 0.3em 0.3em 0 0;
+}
+
+/* SQL syntax highlighting enhancements */
+.language-sql .keyword {
+  color: #ff79c6;
+  font-weight: bold;
+}
+
+.language-sql .operator {
+  color: #ff79c6;
+}
+
+.language-sql .number {
+  color: #bd93f9;
+}
+
+.language-sql .string {
+  color: #f1fa8c;
+}
+
+.language-sql .comment {
+  color: #6272a4;
+  font-style: italic;
+} 

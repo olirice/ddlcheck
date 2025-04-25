@@ -16,7 +16,7 @@
         <link rel="prev" href="../add_column/">
       
       
-        <link rel="next" href="../create_index/">
+        <link rel="next" href="../drop_column/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -49,6 +49,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -164,13 +166,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/oliverrice/ddlcheck" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/olirice/ddlcheck" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
-    oliverrice/ddlcheck
+    olirice/ddlcheck
   </div>
 </a>
       </div>
@@ -210,13 +212,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/oliverrice/ddlcheck" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/olirice/ddlcheck" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
-    oliverrice/ddlcheck
+    olirice/ddlcheck
   </div>
 </a>
     </div>
@@ -274,7 +276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage.md" class="md-nav__link">
+      <a href="../../usage/" class="md-nav__link">
         
   
   
@@ -464,45 +466,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#issue-detection" class="md-nav__link">
+  <a href="#what-it-checks-for" class="md-nav__link">
     <span class="md-ellipsis">
-      Issue Detection
+      What It Checks For
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-this-is-risky" class="md-nav__link">
+  <a href="#why-its-risky" class="md-nav__link">
     <span class="md-ellipsis">
-      Why This Is Risky
+      Why Its Risky
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-approach" class="md-nav__link">
+  <a href="#safer-alternative" class="md-nav__link">
     <span class="md-ellipsis">
-      Recommended Approach
+      Safer Alternative
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#configuration-options" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related Checks
+      Configuration Options
     </span>
   </a>
   
@@ -524,7 +517,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../drop_column.md" class="md-nav__link">
+      <a href="../drop_column/" class="md-nav__link">
         
   
   
@@ -570,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_column.md" class="md-nav__link">
+      <a href="../rename_column/" class="md-nav__link">
         
   
   
@@ -593,7 +586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../set_not_null.md" class="md-nav__link">
+      <a href="../set_not_null/" class="md-nav__link">
         
   
   
@@ -616,7 +609,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../update_without_filter.md" class="md-nav__link">
+      <a href="../update_without_filter/" class="md-nav__link">
         
   
   
@@ -639,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../drop_table.md" class="md-nav__link">
+      <a href="../drop_table/" class="md-nav__link">
         
   
   
@@ -692,7 +685,29 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development.md" class="md-nav__link">
+      <a href="../../custom_checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/" class="md-nav__link">
         
   
   
@@ -734,45 +749,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#issue-detection" class="md-nav__link">
+  <a href="#what-it-checks-for" class="md-nav__link">
     <span class="md-ellipsis">
-      Issue Detection
+      What It Checks For
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-this-is-risky" class="md-nav__link">
+  <a href="#why-its-risky" class="md-nav__link">
     <span class="md-ellipsis">
-      Why This Is Risky
+      Why Its Risky
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#recommended-approach" class="md-nav__link">
+  <a href="#safer-alternative" class="md-nav__link">
     <span class="md-ellipsis">
-      Recommended Approach
+      Safer Alternative
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#configuration-options" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related Checks
+      Configuration Options
     </span>
   </a>
   
@@ -798,15 +804,16 @@
 
 
 <h1 id="alter-column-type-check">Alter Column Type Check</h1>
-<p>The <code>alter_column_type</code> check detects when column types are changed using <code>ALTER TABLE ... ALTER COLUMN ... TYPE</code>. This operation requires a table rewrite in PostgreSQL, which can cause locks and downtime for large tables.</p>
-<h2 id="issue-detection">Issue Detection</h2>
-<p>This check looks for statements like:</p>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-</code></pre></div>
+<p><strong>Check ID:</strong> <code>alter_column_type</code> | <strong>Severity:</strong> HIGH</p>
+<h2 id="what-it-checks-for">What It Checks For</h2>
+<p>This check detects when column types are changed using <code>ALTER TABLE ... ALTER COLUMN ... TYPE</code>. This operation requires a table rewrite in PostgreSQL, which can cause locks and downtime for large tables.</p>
+<p>Example risky SQL:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+</span></code></pre></div>
 <p>or statements with USING clause:</p>
-<div class="highlight"><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">amount</span><span class="p">::</span><span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-</code></pre></div>
-<h2 id="why-this-is-risky">Why This Is Risky</h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">amount</span><span class="p">::</span><span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></code></pre></div>
+<h2 id="why-its-risky">Why Its Risky</h2>
 <p>Changing a column's data type in PostgreSQL requires rewriting the entire table because:</p>
 <ol>
 <li>PostgreSQL needs to scan every row to validate the conversion</li>
@@ -814,7 +821,7 @@
 <li>For large tables, this can lead to significant downtime</li>
 <li>Applications may experience timeouts or failures during the operation</li>
 </ol>
-<h2 id="recommended-approach">Recommended Approach</h2>
+<h2 id="safer-alternative">Safer Alternative</h2>
 <p>Instead of directly changing the column type, consider a multi-step approach:</p>
 <ol>
 <li>Add a new column with the desired type</li>
@@ -824,35 +831,30 @@
 <li>Rename the new column to the original name (if needed)</li>
 </ol>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- Step 1: Add new column</span>
-<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status_new</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-
-<span class="c1">-- Step 2: Fill new column in batches (do this in application code or using a cursor)</span>
-<span class="k">UPDATE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">status_new</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">::</span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span>
-<span class="c1">-- ...repeat for all batches</span>
-
-<span class="c1">-- Step 3: Validation (in application code)</span>
-
-<span class="c1">-- Step 4: Once validated, drop old column</span>
-<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
-
-<span class="c1">-- Step 5: Rename new column to original name</span>
-<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">RENAME</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status_new</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
-</code></pre></div>
-<h2 id="configuration">Configuration</h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Step 1: Add new column</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status_new</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">-- Step 2: Fill new column in batches (do this in application code or using a cursor)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">status_new</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">::</span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">-- ...repeat for all batches</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">-- Step 3: Validation (in application code)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1">-- Step 4: Once validated, drop old column</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1">-- Step 5: Rename new column to original name</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">RENAME</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">status_new</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+</span></code></pre></div>
+<h2 id="configuration-options">Configuration Options</h2>
 <p>You can configure or disable this check in your <code>.ddlcheck</code> configuration file:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Disable this check</span>
-<span class="n">excluded_checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;alter_column_type&quot;</span><span class="p">]</span>
-
-<span class="c1"># Override severity level</span>
-<span class="k">[severity]</span>
-<span class="n">alter_column_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="w">  </span><span class="c1"># Options: HIGH, MEDIUM, LOW, INFO</span>
-</code></pre></div>
-<h2 id="related-checks">Related Checks</h2>
-<ul>
-<li><a href="drop_column.md">drop_column</a>: Also detects operations requiring table rewrites</li>
-<li><a href="../add_column/">add_column</a>: Complements this check for schema modifications </li>
-</ul>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Disable this check</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">excluded_checks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;alter_column_type&quot;</span><span class="p">]</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Override severity level</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">[severity]</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">alter_column_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="w">  </span><span class="c1"># Options: HIGH, MEDIUM, LOW, INFO</span>
+</span></code></pre></div>
 
 
 
@@ -901,7 +903,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.expand", "navigation.indexes", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.expand", "navigation.indexes", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
