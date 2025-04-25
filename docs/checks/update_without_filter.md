@@ -1,48 +1,66 @@
 # Update Without Filter Check
 
-## Overview
+**Check ID:** `update_without_filter` | **Severity:** HIGH
 
-The `update_without_filter` check detects `UPDATE` statements that don't include a `WHERE` clause, which could potentially update all rows in a table unintentionally.
+## What It Checks For
 
-## Why This Is Important
+This check detects `UPDATE` statements that don't include a `WHERE` clause, which would update all rows in a table.
 
-Running an UPDATE without a WHERE clause is extremely risky because:
-
-1. It will modify **ALL** rows in the table
-2. It can cause excessive disk I/O and CPU usage on large tables
-3. It can block other operations for extended periods
-4. The operation is difficult to roll back without a proper backup
-
-## Safer Approaches
-
-When writing UPDATE statements:
-
-1. **Always include a WHERE clause**: Even if you intend to update all rows, make it explicit
-2. **Start with a SELECT**: First run a SELECT with the same WHERE clause to verify the affected rows
-3. **Use transactions**: Wrap updates in transactions so they can be rolled back if needed
-4. **Limit batch size**: For large tables, update rows in smaller batches to reduce locking
-
-## Example
-
-Unsafe approach (flagged by this check):
+Example risky SQL:
 
 ```sql
--- Updates all rows in the table
-UPDATE users SET active = false;
+UPDATE products SET price = price * 1.1;
 ```
 
-Safer approach:
+## Why Its Risky
+
+Executing an UPDATE without a WHERE clause is risky because:
+
+1. It affects **all rows** in the table, which is rarely the intended behavior
+2. It can cause excessive I/O and blocking on large tables
+3. It may lead to unintended data changes that are difficult to reverse
+4. It can significantly impact application performance during execution
+
+## Safer Alternative
+
+Always include a WHERE clause in UPDATE statements to limit the scope of changes:
 
 ```sql
--- Explicitly identify which rows to update
-UPDATE users SET active = false WHERE last_login < '2023-01-01';
-
--- Or if you really want to update all rows, make it explicit
-UPDATE users SET active = false WHERE 1=1; -- Intention to update all rows is clear
+-- Update specific products only
+UPDATE products SET price = price * 1.1 WHERE category = 'electronics';
 ```
 
-## Check Details
+If you genuinely need to update all rows, consider:
 
-- **ID**: `update_without_filter`
-- **Severity**: HIGH
-- **Category**: Data Manipulation 
+1. Adding an explicit condition that makes the intention clear:
+
+```sql
+-- Makes it clear all rows are intentionally being updated
+UPDATE products SET last_inventory_check = CURRENT_TIMESTAMP 
+WHERE TRUE;
+```
+
+2. For large tables, use batched updates to reduce lock time:
+
+```sql
+-- Update in smaller batches
+UPDATE products SET price = price * 1.1 
+WHERE id BETWEEN 1 AND 10000;
+```
+
+## Configuration Options
+
+You can configure or disable this check in your `.ddlcheck` configuration file:
+
+```toml
+# Disable this check
+excluded_checks = ["update_without_filter"]
+
+# Override severity level
+[severity]
+update_without_filter = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
+
+# Custom configuration
+[update_without_filter]
+allowed_tables = ["one_row_settings"]  # Tables that are safe to update without WHERE
+``` 

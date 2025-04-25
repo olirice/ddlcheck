@@ -1,8 +1,6 @@
 # Add Column Check
 
-**Check ID:** `add_column`
-
-**Severity:** HIGH
+**Check ID:** `add_column_not_null_default` | **Severity:** HIGH
 
 ## What It Checks For
 
@@ -14,7 +12,7 @@ Example risky SQL:
 ALTER TABLE users ADD COLUMN email_verified BOOLEAN NOT NULL DEFAULT FALSE;
 ```
 
-## Why It's Risky
+## Why Its Risky
 
 When you add a column with both `NOT NULL` and `DEFAULT` constraints, PostgreSQL has to perform the following operations:
 

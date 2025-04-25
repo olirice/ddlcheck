@@ -1,8 +1,6 @@
 # Create Index Check
 
-**Check ID:** `create_index`
-
-**Severity:** MEDIUM
+**Check ID:** `create_index` | **Severity:** MEDIUM
 
 ## What It Checks For
 
@@ -14,7 +12,7 @@ Example risky SQL:
 CREATE INDEX idx_users_email ON users (email);
 ```
 
-## Why It's Risky
+## Why Its Risky
 
 When you create an index without the `CONCURRENTLY` option, PostgreSQL takes an `EXCLUSIVE` lock on the table while building the index. This lock blocks all writes to the table (such as INSERT, UPDATE, DELETE operations) until the index is fully built.
 
@@ -39,8 +37,6 @@ The `CONCURRENTLY` option:
 3. Cannot be used within a transaction block
 
 Note that `CREATE INDEX CONCURRENTLY` is more expensive and slower but greatly reduces the impact on active production applications.
-
-## Important Limitations
 
 When using `CREATE INDEX CONCURRENTLY`:
 

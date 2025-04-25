@@ -1,10 +1,12 @@
 # Truncate Check
 
-The `truncate` check detects when `TRUNCATE TABLE` statements are used. These operations can cause data loss and table locks, making them risky in production environments.
+**Check ID:** `truncate` | **Severity:** HIGH
 
-## Issue Detection
+## What It Checks For
 
-This check looks for statements like:
+This check detects when `TRUNCATE TABLE` statements are used. These operations can cause data loss and table locks, making them risky in production environments.
+
+Example risky SQL:
 
 ```sql
 TRUNCATE TABLE audit_logs;
@@ -16,7 +18,7 @@ or
 TRUNCATE audit_logs, temp_tables CASCADE;
 ```
 
-## Why This Is Risky
+## Why Its Risky
 
 Using `TRUNCATE TABLE` in PostgreSQL has several implications:
 
@@ -26,7 +28,7 @@ Using `TRUNCATE TABLE` in PostgreSQL has several implications:
 4. **Autovacuum**: Truncated tables don't need vacuuming, but may affect statistics/planning
 5. **Transaction Visibility**: Even in a transaction, other sessions may observe the truncated state due to lock acquisition
 
-## Recommended Approach
+## Safer Alternative
 
 Instead of using `TRUNCATE`, consider these alternatives:
 
@@ -60,7 +62,7 @@ ALTER TABLE audit_logs_new RENAME TO audit_logs;
 DROP TABLE audit_logs_old;
 ```
 
-## Configuration
+## Configuration Options
 
 You can configure or disable this check in your `.ddlcheck` configuration file:
 
@@ -75,9 +77,4 @@ truncate = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
 # Custom configuration
 [truncate]
 allowed_tables = ["test_data", "temp_imports"]  # Tables that are safe to truncate
-```
-
-## Related Checks
-
-- [drop_table](drop_table.md): Similar destructive operation
-- [update_without_filter](update_without_filter.md): Another operation that affects all rows 
+``` 

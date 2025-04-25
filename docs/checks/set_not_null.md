@@ -1,57 +1,61 @@
 # Set Not Null Check
 
-## Overview
+**Check ID:** `set_not_null` | **Severity:** MEDIUM
 
-The `set_not_null` check detects `ALTER TABLE ... SET NOT NULL` operations which could potentially fail if existing rows contain null values.
+## What It Checks For
 
-## Why This Is Important
+This check detects `ALTER TABLE ... ALTER COLUMN ... SET NOT NULL` operations which can cause table locks and data inconsistency issues.
 
-Adding a NOT NULL constraint to an existing column is risky because:
-
-1. It will fail if any existing rows contain NULL values
-2. It can cause long-running transactions on large tables
-3. It may lead to table locks that block concurrent operations
-
-## Safer Approaches
-
-When adding NOT NULL constraints, consider:
-
-1. **Validate first**: First check if there are any null values in the column
-2. **Update data**: Fill in NULL values with appropriate defaults before adding the constraint
-3. **Use validation trigger**: Use a trigger to prevent new NULL values while gradually fixing existing data
-4. **Add with default**: When adding a new column, add it with NOT NULL and a default value in one statement
-
-## Example
-
-Unsafe approach (flagged by this check):
+Example risky SQL:
 
 ```sql
--- Directly set NOT NULL on an existing column
-ALTER TABLE orders ALTER COLUMN customer_id SET NOT NULL;
+ALTER TABLE users ALTER COLUMN email SET NOT NULL;
 ```
 
-Safer approach:
+## Why Its Risky
+
+Setting a NOT NULL constraint on an existing column is risky because:
+
+1. PostgreSQL must scan the entire table to verify no NULL values exist
+2. During this scan, an ACCESS EXCLUSIVE lock is held on the table
+3. For large tables, this can cause significant downtime
+4. If any NULL values exist, the operation will fail, potentially leaving transactions in an unexpected state
+
+## Safer Alternative
+
+Instead of directly setting NOT NULL constraints, consider:
+
+1. **Verify data first**: Ensure there are no NULL values before applying the constraint
+2. **Use validation trigger**: Add a trigger to prevent new NULL values while you clean up existing ones
+3. **Apply during low-traffic periods**: Schedule constraint changes during maintenance windows
+4. **Use NOT VALID option**: For check constraints, consider using NOT VALID initially
+
+Example safer approach:
 
 ```sql
--- 1. First check if there are any null values
-SELECT COUNT(*) FROM orders WHERE customer_id IS NULL;
+-- 1. First check if there are any NULL values
+SELECT COUNT(*) FROM users WHERE email IS NULL;
 
--- 2. Update any existing NULL values
-UPDATE orders SET customer_id = 0 WHERE customer_id IS NULL;
+-- 2. Fix any NULL values
+UPDATE users SET email = 'unknown@example.com' WHERE email IS NULL;
 
--- 3. Then add the constraint
-ALTER TABLE orders ALTER COLUMN customer_id SET NOT NULL;
+-- 3. Add a validation trigger to prevent new NULLs
+CREATE TRIGGER ensure_email_not_null
+BEFORE INSERT OR UPDATE ON users
+FOR EACH ROW EXECUTE FUNCTION validate_email_not_null();
+
+-- 4. Finally, add the constraint during a maintenance window
+ALTER TABLE users ALTER COLUMN email SET NOT NULL;
 ```
 
-Best approach (for new columns):
+## Configuration Options
 
-```sql
--- Add a new NOT NULL column with a default in one statement
-ALTER TABLE orders ADD COLUMN priority INTEGER NOT NULL DEFAULT 0;
-```
+You can configure or disable this check in your `.ddlcheck` configuration file:
 
-## Check Details
+```toml
+# Disable this check
+excluded_checks = ["set_not_null"]
 
-- **ID**: `set_not_null`
-- **Severity**: MEDIUM
-- **Category**: Schema Changes 
+# Override severity level
+[severity]
+set_not_null = "LOW"  # Options: HIGH, MEDIUM, LOW, INFO 

@@ -1,18 +1,26 @@
 # Rename Column Check
 
-## Overview
+**Check ID:** `rename_column` | **Severity:** MEDIUM
 
-The `rename_column` check detects `ALTER TABLE ... RENAME COLUMN` operations which could potentially cause application errors if code still references the old column name.
+## What It Checks For
 
-## Why This Is Important
+This check detects `ALTER TABLE ... RENAME COLUMN` operations which could potentially cause application errors if code still references the old column name.
 
-Renaming a column is an operation that:
+Example risky SQL:
 
-1. Can cause application errors if code, views, or triggers still reference the old column name
-2. Requires coordinated deployment of database changes and application changes
+```sql
+ALTER TABLE users RENAME COLUMN phone TO phone_number;
+```
+
+## Why Its Risky
+
+Renaming a column is a risky operation because:
+
+1. It can cause application errors if code, views, or triggers still reference the old column name
+2. It requires coordinated deployment of database changes and application changes
 3. May impact reports, queries, and other database objects that aren't part of the main application code
 
-## Safer Approaches
+## Safer Alternative
 
 When renaming columns, consider:
 
@@ -20,16 +28,7 @@ When renaming columns, consider:
 2. **Use views**: Create a view that exposes both the old and new column names during transition
 3. **Create a new column**: Instead of renaming, add a new column, copy data, and eventually drop the old column after transition
 
-## Example
-
-Unsafe approach (flagged by this check):
-
-```sql
--- Immediately rename a column
-ALTER TABLE users RENAME COLUMN phone TO phone_number;
-```
-
-Safer approach:
+Example safer approach:
 
 ```sql
 -- 1. Keep both columns during transition 
@@ -45,8 +44,15 @@ FOR EACH ROW EXECUTE FUNCTION sync_phone_columns_func();
 ALTER TABLE users DROP COLUMN phone;
 ```
 
-## Check Details
+## Configuration Options
 
-- **ID**: `rename_column`
-- **Severity**: MEDIUM
-- **Category**: Schema Changes 
+You can configure or disable this check in your `.ddlcheck` configuration file:
+
+```toml
+# Disable this check
+excluded_checks = ["rename_column"]
+
+# Override severity level
+[severity]
+rename_column = "LOW"  # Options: HIGH, MEDIUM, LOW, INFO
+``` 

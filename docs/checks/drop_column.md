@@ -1,47 +1,54 @@
 # Drop Column Check
 
-## Overview
+**Check ID:** `drop_column` | **Severity:** HIGH
 
-The `drop_column` check detects `ALTER TABLE ... DROP COLUMN` operations which could potentially cause application errors if code still references the removed column.
+## What It Checks For
 
-## Why This Is Important
+This check detects `ALTER TABLE ... DROP COLUMN` operations which could potentially cause data loss, application errors, and table locks.
 
-Dropping a column is a destructive operation that:
+Example risky SQL:
 
-1. Permanently removes all data stored in that column
-2. Can cause application errors if code or views still reference the removed column
-3. Cannot be easily rolled back in case of issues
+```sql
+ALTER TABLE users DROP COLUMN email;
+```
 
-## Safer Approaches
+## Why Its Risky
+
+Dropping a column is a high-risk operation because:
+
+1. It **permanently deletes all data** stored in the column
+2. It cannot be easily reversed without a proper backup
+3. It can cause application errors if code still references the column
+4. For PostgreSQL versions before 11, dropping a column requires a table rewrite and an ACCESS EXCLUSIVE lock
+5. It may impact dependent objects like indexes, constraints, and views
+
+## Safer Alternative
 
 Instead of immediately dropping columns, consider:
 
-1. **Two-step migration**: First remove all application references to the column, then drop it in a separate migration after confirming no issues
-2. **Comment in code**: Add a comment in the migration indicating that application code changes should be deployed first
-3. **Rename instead of drop**: Temporarily rename the column (e.g., add '_to_delete' suffix) to ensure no issues before permanently dropping it
+1. **Soft deprecation**: First rename the column (e.g., add 'deprecated_' prefix) and stop using it in application code
+2. **Two-phase migration**: First update all application code to stop using the column, then drop it
+3. **Use transaction**: Always use transactions when dropping columns to ensure atomicity
 
-## Example
-
-Unsafe approach (flagged by this check):
+Example safer approach:
 
 ```sql
--- Immediately drop a column
-ALTER TABLE users DROP COLUMN phone_number;
+-- 1. First rename the column to mark it as deprecated
+ALTER TABLE users RENAME COLUMN email TO deprecated_email;
+
+-- 2. In a later migration (after confirming no issues):
+ALTER TABLE users DROP COLUMN deprecated_email;
 ```
 
-Safer approach:
+## Configuration Options
 
-```sql
--- 1. First migration: Rename the column to mark it for deletion
--- Deploy application changes that stop using this column
-ALTER TABLE users RENAME COLUMN phone_number TO phone_number_to_delete;
+You can configure or disable this check in your `.ddlcheck` configuration file:
 
--- 2. Second migration (later, after confirming no issues):
-ALTER TABLE users DROP COLUMN phone_number_to_delete;
-```
+```toml
+# Disable this check
+excluded_checks = ["drop_column"]
 
-## Check Details
-
-- **ID**: `drop_column`
-- **Severity**: HIGH
-- **Category**: Schema Changes 
+# Override severity level
+[severity]
+drop_column = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
+``` 

@@ -1,10 +1,12 @@
 # Alter Column Type Check
 
-The `alter_column_type` check detects when column types are changed using `ALTER TABLE ... ALTER COLUMN ... TYPE`. This operation requires a table rewrite in PostgreSQL, which can cause locks and downtime for large tables.
+**Check ID:** `alter_column_type` | **Severity:** HIGH
 
-## Issue Detection
+## What It Checks For
 
-This check looks for statements like:
+This check detects when column types are changed using `ALTER TABLE ... ALTER COLUMN ... TYPE`. This operation requires a table rewrite in PostgreSQL, which can cause locks and downtime for large tables.
+
+Example risky SQL:
 
 ```sql
 ALTER TABLE orders ALTER COLUMN status TYPE VARCHAR(100);
@@ -16,7 +18,7 @@ or statements with USING clause:
 ALTER TABLE orders ALTER COLUMN amount TYPE NUMERIC(10,2) USING amount::NUMERIC(10,2);
 ```
 
-## Why This Is Risky
+## Why Its Risky
 
 Changing a column's data type in PostgreSQL requires rewriting the entire table because:
 
@@ -25,7 +27,7 @@ Changing a column's data type in PostgreSQL requires rewriting the entire table 
 3. For large tables, this can lead to significant downtime
 4. Applications may experience timeouts or failures during the operation
 
-## Recommended Approach
+## Safer Alternative
 
 Instead of directly changing the column type, consider a multi-step approach:
 
@@ -54,7 +56,7 @@ ALTER TABLE orders DROP COLUMN status;
 ALTER TABLE orders RENAME COLUMN status_new TO status;
 ```
 
-## Configuration
+## Configuration Options
 
 You can configure or disable this check in your `.ddlcheck` configuration file:
 
@@ -65,9 +67,4 @@ excluded_checks = ["alter_column_type"]
 # Override severity level
 [severity]
 alter_column_type = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
-```
-
-## Related Checks
-
-- [drop_column](drop_column.md): Also detects operations requiring table rewrites
-- [add_column](add_column.md): Complements this check for schema modifications 
+``` 

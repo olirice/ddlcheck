@@ -10,7 +10,7 @@ The checks are organized into the following categories:
 
 These checks identify operations that can cause significant issues:
 
-- **[add_column](add_column.md)**: Detects when columns are added with NOT NULL constraints and DEFAULT values
+- **[add_column_not_null_default](add_column.md)**: Detects when columns are added with NOT NULL constraints and DEFAULT values
 - **[alter_column_type](alter_column_type.md)**: Detects ALTER COLUMN TYPE operations that require table rewrites
 - **[drop_table](drop_table.md)**: Detects DROP TABLE operations that could result in data loss
 - **[truncate](truncate.md)**: Detects TRUNCATE operations which can cause data loss and locks
@@ -36,7 +36,7 @@ excluded_checks = ["truncate", "drop_table"]
 # Override severity levels
 [severity]
 create_index = "LOW"
-add_column = "HIGH"
+add_column_not_null_default = "HIGH"
 
 # Configure individual checks
 [create_index]
