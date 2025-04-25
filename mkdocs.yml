@@ -2,8 +2,8 @@ site_name: DDLCheck
 site_description: CLI tool to analyze SQL migrations for potential production database risks
 site_author: Oliver Rice
 
-repo_url: https://github.com/oliverrice/ddlcheck
-repo_name: oliverrice/ddlcheck
+repo_url: https://github.com/olirice/ddlcheck
+repo_name: olirice/ddlcheck
 
 theme:
   name: material

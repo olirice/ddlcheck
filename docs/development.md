@@ -7,7 +7,7 @@ This guide explains how to set up your development environment and contribute to
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/oliverrice/ddlcheck.git
+git clone https://github.com/olirice/ddlcheck.git
 cd ddlcheck
 ```
 

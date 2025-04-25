@@ -30,9 +30,18 @@ pymdown-extensions = "^10.14.3"
 [project.scripts]
 ddlcheck = "ddlcheck.cli:app"
 
-[tool.pytest]
-testpaths = ["tests"]
-pythonpath = ["src"]
+[tool.coverage.run]
+source = ["src/ddlcheck"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+]
 
 [tool.black]
 line-length = 100
@@ -59,3 +68,8 @@ warn_unused_ignores = true
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--cov=src/ddlcheck --cov-report=term --cov-report=xml"

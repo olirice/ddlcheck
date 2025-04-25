@@ -17,7 +17,8 @@ This will install DDLCheck and all its dependencies.
 To install from source:
 
 ```bash
-git clone https://github.com/oliverrice/ddlcheck.git
+# Clone the repository
+git clone https://github.com/olirice/ddlcheck.git
 cd ddlcheck
 pip install .
 ```
