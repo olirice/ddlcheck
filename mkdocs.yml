@@ -16,13 +16,31 @@ theme:
     - navigation.expand
     - navigation.indexes
     - content.code.copy
+    - content.code.annotate
 
 markdown_extensions:
   - admonition
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.tabbed
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: terminal
+          class: terminal
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.details
+  - attr_list
+  - md_in_html
+
+extra_css:
+  - stylesheets/extra.css
 
 nav:
   - Home: index.md
@@ -40,4 +58,5 @@ nav:
     - Update Without Filter: checks/update_without_filter.md
     - Drop Table: checks/drop_table.md
     - Truncate: checks/truncate.md
+  - Custom Checks: custom_checks.md
   - Development: development.md 
