@@ -100,11 +100,3 @@ min_size_warning = 1000
 ## Documentation
 
 For more detailed documentation, please visit our [documentation site](https://olirice.github.io/ddlcheck).
-
-## Contributing
-
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to get started.
-
-## License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
