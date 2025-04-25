@@ -3,11 +3,9 @@
 import os
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
 
-import pytest
-
-from ddlcheck.models import Config, SeverityLevel, Issue, CheckResult
+from ddlcheck.models import CheckResult, Config, Issue, SeverityLevel
 
 
 def test_issue_repr():
@@ -43,25 +41,24 @@ def test_config_from_file_default_path_exists():
     # Create a mock config file content
     config_content = """
     excluded_checks = ["check1", "check2"]
-    
+
     [severity]
     check3 = "HIGH"
-    
+
     [check4]
     option1 = "value1"
     """
-    
+
     # Mock Path.cwd() to return a known path
     mock_cwd = Path("/mock/cwd")
-    mock_config_path = mock_cwd / ".ddlcheck"
-    
+
     with patch("pathlib.Path.cwd", return_value=mock_cwd):
         # Mock Path.exists() to return True for the default config path
         with patch("pathlib.Path.exists", return_value=True):
             # Mock open to return our config content
             with patch("builtins.open", mock_open(read_data=config_content)):
                 config = Config.from_file()
-                
+
                 # Should load config from the default path
                 assert config.excluded_checks == {"check1", "check2"}
                 assert config.severity_overrides == {"check3": SeverityLevel.HIGH}
@@ -73,22 +70,22 @@ def test_config_from_file_custom_path():
     # Create a temporary file with config content
     config_content = """
     excluded_checks = ["check1", "check2"]
-    
+
     [severity]
     check3 = "HIGH"
-    
+
     [check4]
     option1 = "value1"
     """
-    
+
     with NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as temp_file:
         temp_file.write(config_content)
         temp_path = Path(temp_file.name)
-    
+
     try:
         # Load config from the temporary file
         config = Config.from_file(temp_path)
-        
+
         # Check that config was loaded correctly
         assert config.excluded_checks == {"check1", "check2"}
         assert config.severity_overrides == {"check3": SeverityLevel.HIGH}
@@ -105,19 +102,19 @@ def test_config_from_file_invalid_format():
     excluded_checks = ["check1", "check2"
     severity = {
     """
-    
+
     with NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as temp_file:
         temp_file.write(config_content)
         temp_path = Path(temp_file.name)
-    
+
     try:
         # Load config from the invalid file
         with patch("ddlcheck.models.logger") as mock_logger:
             config = Config.from_file(temp_path)
-            
+
             # Should log a warning
             assert mock_logger.warning.called
-            
+
             # Should return default config
             assert config.excluded_checks == set()
             assert config.check_config == {}
@@ -133,19 +130,19 @@ def test_config_from_file_invalid_excluded_checks():
     config_content = """
     excluded_checks = "not_a_list"
     """
-    
+
     with NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as temp_file:
         temp_file.write(config_content)
         temp_path = Path(temp_file.name)
-    
+
     try:
         # Load config from the file
         with patch("ddlcheck.models.logger") as mock_logger:
             config = Config.from_file(temp_path)
-            
+
             # Should log a warning
             assert mock_logger.warning.called
-            
+
             # Should have empty excluded_checks
             assert config.excluded_checks == set()
     finally:
@@ -160,19 +157,19 @@ def test_config_from_file_invalid_severity():
     [severity]
     check1 = "INVALID_LEVEL"
     """
-    
+
     with NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as temp_file:
         temp_file.write(config_content)
         temp_path = Path(temp_file.name)
-    
+
     try:
         # Load config from the file
         with patch("ddlcheck.models.logger") as mock_logger:
             config = Config.from_file(temp_path)
-            
+
             # Should log a warning
             assert mock_logger.warning.called
-            
+
             # Should have empty severity_overrides
             assert config.severity_overrides == {}
     finally:
@@ -186,19 +183,19 @@ def test_config_from_file_invalid_check_config():
     config_content = """
     check1 = "not_a_dict"
     """
-    
+
     with NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as temp_file:
         temp_file.write(config_content)
         temp_path = Path(temp_file.name)
-    
+
     try:
         # Load config from the file
         with patch("ddlcheck.models.logger") as mock_logger:
             config = Config.from_file(temp_path)
-            
+
             # Should log a warning
             assert mock_logger.warning.called
-            
+
             # Should have empty check_config
             assert "check1" not in config.check_config
     finally:
@@ -210,7 +207,7 @@ def test_is_check_enabled():
     """Test Config.is_check_enabled method."""
     # Create config with excluded checks
     config = Config(excluded_checks={"check1", "check2"})
-    
+
     # Check if enabled
     assert config.is_check_enabled("check1") is False
     assert config.is_check_enabled("check2") is False
@@ -222,7 +219,7 @@ def test_get_check_config():
     # Create config with check configs
     config = Config()
     config.check_config["check1"] = {"option1": "value1"}
-    
+
     # Get check config
     assert config.get_check_config("check1") == {"option1": "value1"}
     assert config.get_check_config("nonexistent") == {}
@@ -233,7 +230,7 @@ def test_get_severity_override():
     # Create config with severity overrides
     config = Config()
     config.severity_overrides["check1"] = SeverityLevel.HIGH
-    
+
     # Get severity override
     assert config.get_severity_override("check1") == SeverityLevel.HIGH
     assert config.get_severity_override("nonexistent") is None
@@ -244,11 +241,11 @@ def test_check_result_init_and_add_issue():
     # Create CheckResult
     file_path = Path("test.sql")
     result = CheckResult(file_path)
-    
+
     # Should have no issues initially
     assert result.issues == []
     assert result.has_issues() is False
-    
+
     # Add an issue
     issue = Issue(
         check_id="test_check",
@@ -257,7 +254,7 @@ def test_check_result_init_and_add_issue():
         severity=SeverityLevel.HIGH,
     )
     result.add_issue(issue)
-    
+
     # Should have one issue now
     assert len(result.issues) == 1
     assert result.issues[0] == issue
@@ -281,11 +278,11 @@ def test_check_result_init_with_issues():
             severity=SeverityLevel.MEDIUM,
         ),
     ]
-    
+
     # Create CheckResult with issues
     file_path = Path("test.sql")
     result = CheckResult(file_path, issues)
-    
+
     # Should have the issues
     assert len(result.issues) == 2
     assert result.issues == issues
@@ -305,8 +302,8 @@ def test_check_result_repr():
         ),
     ]
     result = CheckResult(file_path, issues)
-    
+
     # Check representation
     repr_str = repr(result)
     assert "test.sql" in repr_str
-    assert "1" in repr_str  # Number of issues 
+    assert "1" in repr_str  # Number of issues

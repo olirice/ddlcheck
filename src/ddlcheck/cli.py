@@ -1,7 +1,7 @@
 """Command-line interface for DDLCheck."""
 
-import os
 import logging
+import os
 from pathlib import Path
 from typing import List, Optional
 
@@ -14,7 +14,7 @@ from rich.text import Text
 from ddlcheck import __version__
 from ddlcheck.checks import ALL_CHECKS
 from ddlcheck.logger import setup_logging
-from ddlcheck.models import CheckResult, Config, Issue, SeverityLevel
+from ddlcheck.models import CheckResult, Config, SeverityLevel
 
 # Create the app
 app = typer.Typer(help="Check SQL files for potentially dangerous operations")
@@ -79,7 +79,7 @@ def display_results(results: List[CheckResult]) -> None:
         # Get the file name for display
         file_path = result.file_path
         file_name = file_path.name
-        
+
         console.print(f"\n[bold]File:[/bold] {file_path} ([bold cyan]{file_name}[/bold cyan])")
 
         table = Table(show_header=True, header_style="bold")

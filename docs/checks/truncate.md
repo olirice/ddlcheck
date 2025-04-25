@@ -42,7 +42,7 @@ DELETE FROM audit_logs WHERE created_at < '2023-01-01';
 
 ```sql
 -- Delete in batches of 10,000 rows
-DELETE FROM audit_logs 
+DELETE FROM audit_logs
 WHERE id IN (SELECT id FROM audit_logs WHERE created_at < '2023-01-01' LIMIT 10000);
 ```
 
@@ -77,4 +77,4 @@ truncate = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
 # Custom configuration
 [truncate]
 allowed_tables = ["test_data", "temp_imports"]  # Tables that are safe to truncate
-``` 
+```

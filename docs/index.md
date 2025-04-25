@@ -96,4 +96,4 @@ This helps you identify potential issues before running the migration and sugges
 
 ## Contributing
 
-Contributions are welcome! See the [GitHub repository](https://github.com/olirice/ddlcheck) for details on how to contribute. 
+Contributions are welcome! See the [GitHub repository](https://github.com/olirice/ddlcheck) for details on how to contribute.

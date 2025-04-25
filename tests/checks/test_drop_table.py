@@ -2,12 +2,11 @@
 
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from unittest.mock import patch, MagicMock
 
 import pytest
 
 from ddlcheck.checks.drop_table import DropTableCheck
-from ddlcheck.models import CheckResult, Config, SeverityLevel
+from ddlcheck.models import Config, SeverityLevel
 
 
 def create_temp_sql_file(content):
@@ -94,11 +93,11 @@ def test_basic_drop_table(basic_drop_table_sql_file):
     """Test detection of a basic DROP TABLE statement."""
     check = DropTableCheck()
     result = check.check_file(basic_drop_table_sql_file)
-    
+
     # Should identify the issue
     assert result.has_issues()
     assert len(result.issues) == 1
-    
+
     # Check issue details
     issue = result.issues[0]
     assert issue.check_id == "drop_table"
@@ -110,7 +109,7 @@ def test_if_exists_drop_table(if_exists_sql_file):
     """Test detection of DROP TABLE IF EXISTS."""
     check = DropTableCheck()
     result = check.check_file(if_exists_sql_file)
-    
+
     # The current implementation flags all DROP TABLE operations
     assert result.has_issues()
     assert len(result.issues) == 1
@@ -121,11 +120,11 @@ def test_cascade_drop_table(cascade_sql_file):
     """Test detection of DROP TABLE CASCADE."""
     check = DropTableCheck()
     result = check.check_file(cascade_sql_file)
-    
+
     # Should identify the issue
     assert result.has_issues()
     assert len(result.issues) == 1
-    
+
     # Check issue details
     issue = result.issues[0]
     assert issue.check_id == "drop_table"
@@ -136,7 +135,7 @@ def test_multiple_drop_tables(multiple_drop_tables_sql_file):
     """Test detection of multiple DROP TABLE statements."""
     check = DropTableCheck()
     result = check.check_file(multiple_drop_tables_sql_file)
-    
+
     # Should identify issues for all DROP TABLE statements
     assert result.has_issues()
     assert len(result.issues) == 3
@@ -146,7 +145,7 @@ def test_multiple_statement_types(multiple_statement_types_sql_file):
     """Test mixed statement types."""
     check = DropTableCheck()
     result = check.check_file(multiple_statement_types_sql_file)
-    
+
     # Should only identify the DROP TABLE issue
     assert result.has_issues()
     assert len(result.issues) == 1
@@ -158,7 +157,7 @@ def test_disabled_via_config():
     # Create config with this check excluded
     config = Config(excluded_checks={"drop_table"})
     check = DropTableCheck(config)
-    
+
     # Check should be disabled
     assert not check.enabled
 
@@ -169,6 +168,6 @@ def test_severity_override():
     config = Config()
     config.severity_overrides["drop_table"] = SeverityLevel.MEDIUM
     check = DropTableCheck(config)
-    
+
     # Check effective severity
-    assert check.effective_severity == SeverityLevel.MEDIUM 
+    assert check.effective_severity == SeverityLevel.MEDIUM

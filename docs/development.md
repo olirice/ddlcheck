@@ -120,7 +120,7 @@ class MyCheck(Check):
         issues = []
 
         # Check logic here...
-        
+
         if issue_detected:
             issues.append(
                 self.create_issue(
@@ -138,4 +138,4 @@ class MyCheck(Check):
 1. Update version in `src/ddlcheck/__init__.py`
 2. Update CHANGELOG.md
 3. Create a new release on GitHub
-4. The package will be automatically published to PyPI 
+4. The package will be automatically published to PyPI

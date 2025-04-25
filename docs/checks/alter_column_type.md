@@ -67,4 +67,4 @@ excluded_checks = ["alter_column_type"]
 # Override severity level
 [severity]
 alter_column_type = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
-``` 
+```

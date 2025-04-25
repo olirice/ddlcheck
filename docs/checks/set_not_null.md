@@ -58,4 +58,4 @@ excluded_checks = ["set_not_null"]
 
 # Override severity level
 [severity]
-set_not_null = "LOW"  # Options: HIGH, MEDIUM, LOW, INFO 
+set_not_null = "LOW"  # Options: HIGH, MEDIUM, LOW, INFO

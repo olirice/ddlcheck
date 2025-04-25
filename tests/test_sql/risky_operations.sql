@@ -25,4 +25,4 @@ ALTER TABLE orders ALTER COLUMN customer_id SET NOT NULL;
 DROP TABLE old_logs;
 
 -- Truncate table (risky - data loss)
-TRUNCATE TABLE audit_history; 
+TRUNCATE TABLE audit_history;

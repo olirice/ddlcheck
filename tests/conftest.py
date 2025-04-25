@@ -1,6 +1,5 @@
 """Pytest configuration for DDLCheck."""
 
-import os
 from pathlib import Path
 
 import pytest
@@ -23,4 +22,4 @@ def risky_sql_file(test_sql_dir: Path) -> Path:
 @pytest.fixture
 def empty_config() -> Config:
     """Empty configuration."""
-    return Config() 
+    return Config()

@@ -51,4 +51,4 @@ excluded_checks = ["drop_column"]
 # Override severity level
 [severity]
 drop_column = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
-``` 
+```

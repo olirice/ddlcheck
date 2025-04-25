@@ -6,4 +6,4 @@
 
 # Check-specific configuration options
 #create_index.minimum_rows=100000
-#alter_column_type.severity=HIGH 
+#alter_column_type.severity=HIGH

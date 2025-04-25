@@ -31,7 +31,7 @@ When renaming columns, consider:
 Example safer approach:
 
 ```sql
--- 1. Keep both columns during transition 
+-- 1. Keep both columns during transition
 ALTER TABLE users ADD COLUMN phone_number TEXT;
 UPDATE users SET phone_number = phone;
 
@@ -55,4 +55,4 @@ excluded_checks = ["rename_column"]
 # Override severity level
 [severity]
 rename_column = "LOW"  # Options: HIGH, MEDIUM, LOW, INFO
-``` 
+```

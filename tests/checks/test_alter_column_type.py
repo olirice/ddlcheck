@@ -1,7 +1,5 @@
 """Tests for AlterColumnTypeCheck."""
 
-import pytest
-
 from ddlcheck.checks.alter_column_type import AlterColumnTypeCheck
 from ddlcheck.models import SeverityLevel
 
@@ -14,7 +12,7 @@ def test_alter_column_type():
     assert check_detects_issue(
         AlterColumnTypeCheck,
         "ALTER TABLE orders ALTER COLUMN status TYPE VARCHAR(100);",
-        SeverityLevel.HIGH
+        SeverityLevel.HIGH,
     )
 
 
@@ -24,7 +22,7 @@ def test_alter_column_type_with_using():
     assert check_detects_issue(
         AlterColumnTypeCheck,
         "ALTER TABLE orders ALTER COLUMN amount TYPE NUMERIC(10,2) USING amount::NUMERIC(10,2);",
-        SeverityLevel.HIGH
+        SeverityLevel.HIGH,
     )
 
 
@@ -34,11 +32,11 @@ def test_alter_column_type_multiple_columns():
     assert check_detects_issue(
         AlterColumnTypeCheck,
         """
-        ALTER TABLE orders 
+        ALTER TABLE orders
         ALTER COLUMN status TYPE VARCHAR(100),
         ALTER COLUMN reference TYPE VARCHAR(50);
         """,
-        SeverityLevel.HIGH
+        SeverityLevel.HIGH,
     )
 
 
@@ -46,8 +44,7 @@ def test_alter_column_without_type_change():
     """Test that AlterColumnTypeCheck ignores ALTER COLUMN without type change."""
     # Arrange & Act & Assert
     assert check_no_issue(
-        AlterColumnTypeCheck,
-        "ALTER TABLE orders ALTER COLUMN status SET NOT NULL;"
+        AlterColumnTypeCheck, "ALTER TABLE orders ALTER COLUMN status SET NOT NULL;"
     )
 
 
@@ -55,15 +52,11 @@ def test_add_column():
     """Test that AlterColumnTypeCheck ignores ADD COLUMN."""
     # Arrange & Act & Assert
     assert check_no_issue(
-        AlterColumnTypeCheck,
-        "ALTER TABLE orders ADD COLUMN reference VARCHAR(50);"
+        AlterColumnTypeCheck, "ALTER TABLE orders ADD COLUMN reference VARCHAR(50);"
     )
 
 
 def test_non_alter_statement():
     """Test that AlterColumnTypeCheck ignores non-ALTER statements."""
     # Arrange & Act & Assert
-    assert check_no_issue(
-        AlterColumnTypeCheck,
-        "SELECT * FROM orders;"
-    ) 
+    assert check_no_issue(AlterColumnTypeCheck, "SELECT * FROM orders;")

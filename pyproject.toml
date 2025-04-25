@@ -26,6 +26,7 @@ packages = [{include = "ddlcheck", from = "src"}]
 [tool.poetry.group.dev.dependencies]
 mkdocs-material = "^9.6.12"
 pymdown-extensions = "^10.14.3"
+pre-commit = "^4.2.0"
 
 [project.scripts]
 ddlcheck = "ddlcheck.cli:app"

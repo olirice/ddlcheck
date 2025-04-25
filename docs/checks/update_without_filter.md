@@ -36,7 +36,7 @@ If you genuinely need to update all rows, consider:
 
 ```sql
 -- Makes it clear all rows are intentionally being updated
-UPDATE products SET last_inventory_check = CURRENT_TIMESTAMP 
+UPDATE products SET last_inventory_check = CURRENT_TIMESTAMP
 WHERE TRUE;
 ```
 
@@ -44,7 +44,7 @@ WHERE TRUE;
 
 ```sql
 -- Update in smaller batches
-UPDATE products SET price = price * 1.1 
+UPDATE products SET price = price * 1.1
 WHERE id BETWEEN 1 AND 10000;
 ```
 
@@ -63,4 +63,4 @@ update_without_filter = "MEDIUM"  # Options: HIGH, MEDIUM, LOW, INFO
 # Custom configuration
 [update_without_filter]
 allowed_tables = ["one_row_settings"]  # Tables that are safe to update without WHERE
-``` 
+```

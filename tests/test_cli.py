@@ -1,15 +1,12 @@
 """Tests for the CLI functionality."""
 
-import os
 from pathlib import Path
 from tempfile import NamedTemporaryFile, TemporaryDirectory
-from unittest.mock import patch
 
 import pytest
 from typer.testing import CliRunner
 
 from ddlcheck.cli import app
-from ddlcheck.models import Config, SeverityLevel
 
 
 @pytest.fixture
@@ -28,9 +25,9 @@ def temp_config_file():
     with NamedTemporaryFile(suffix=".toml", mode="w", delete=False) as f:
         f.write(config_content)
         temp_path = Path(f.name)
-    
+
     yield temp_path
-    
+
     # Cleanup
     temp_path.unlink()
 
@@ -117,4 +114,4 @@ def test_check_nonexistent_file(runner):
 
     # Assert
     assert result.exit_code != 0
-    assert "does not exist" in result.stdout 
+    assert "does not exist" in result.stdout

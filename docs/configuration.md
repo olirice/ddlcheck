@@ -89,7 +89,7 @@ Configuration options are applied in the following order (each one overrides the
 
 1. Default values
 2. Configuration file
-3. Command line arguments 
+3. Command line arguments
 
 ## Example with Configuration
 
@@ -135,4 +135,4 @@ Note that with this configuration:
 
 1. The `create_index` and `rename_column` checks are excluded
 2. The severity of the `truncate` check is reduced from HIGH to MEDIUM
-3. The `add_column` check is configured to ignore columns added with a default value 
+3. The `add_column` check is configured to ignore columns added with a default value

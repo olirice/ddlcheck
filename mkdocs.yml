@@ -28,10 +28,10 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: "pymdownx.superfences.fence_code_format"
         - name: terminal
           class: terminal
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: "pymdownx.superfences.fence_code_format"
   - pymdownx.inlinehilite
   - pymdownx.tabbed:
       alternate_style: true
@@ -59,4 +59,4 @@ nav:
     - Drop Table: checks/drop_table.md
     - Truncate: checks/truncate.md
   - Custom Checks: custom_checks.md
-  - Development: development.md 
+  - Development: development.md

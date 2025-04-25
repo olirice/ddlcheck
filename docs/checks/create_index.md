@@ -19,7 +19,7 @@ When you create an index without the `CONCURRENTLY` option, PostgreSQL takes an 
 For large tables, index creation can take a long time, potentially causing:
 
 1. Application timeouts or failures due to blocked write operations
-2. Growing lock queues that affect database performance 
+2. Growing lock queues that affect database performance
 3. Elevated latency for application queries
 
 ## Safer Alternative
@@ -46,4 +46,4 @@ When using `CREATE INDEX CONCURRENTLY`:
 
 ## Configuration Options
 
-No specific configuration options for this check. 
+No specific configuration options for this check.

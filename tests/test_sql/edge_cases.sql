@@ -26,14 +26,14 @@ UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = 1
 ;
 
 -- 7. Complex ALTER TABLE with multiple actions
-ALTER TABLE products 
+ALTER TABLE products
     ADD COLUMN description TEXT,
     ALTER COLUMN price TYPE NUMERIC(10,2),
     DROP COLUMN old_sku,
     RENAME COLUMN sku TO product_code;
-    
+
 -- 8. Nested subqueries
-CREATE VIEW active_users AS 
+CREATE VIEW active_users AS
 SELECT * FROM users WHERE id IN (
     SELECT user_id FROM sessions WHERE last_activity > (
         SELECT CURRENT_TIMESTAMP - INTERVAL '30 days'
@@ -51,4 +51,4 @@ WITH deleted_users AS (
     DELETE FROM users WHERE last_login < '2020-01-01' RETURNING id, email
 )
 INSERT INTO audit_log (action, details)
-SELECT 'user_deleted', json_build_object('id', id, 'email', email) FROM deleted_users; 
+SELECT 'user_deleted', json_build_object('id', id, 'email', email) FROM deleted_users;

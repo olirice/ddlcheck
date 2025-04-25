@@ -59,20 +59,20 @@ from ddlcheck.models import Issue, SeverityLevel
 
 class MyCustomCheck(Check):
     """A custom check implementation."""
-    
+
     @property
     def id(self) -> str:
         return "my_custom_check"
-    
+
     @property
     def description(self) -> str:
         return "Detects something important"
-    
+
     @property
     def severity(self) -> SeverityLevel:
         return SeverityLevel.HIGH
-    
+
     def check_statement(self, stmt, line):
         # Your implementation here
         return []
-``` 
+```

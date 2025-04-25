@@ -1,8 +1,6 @@
 """Utility functions for DDLCheck."""
 
-from typing import Any, Dict, List, Optional, Union
-
-import pglast
+from typing import Any, Dict, List
 
 
 def get_node_type(node: Dict[str, Any]) -> str:

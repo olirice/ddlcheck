@@ -49,4 +49,4 @@ This approach:
 
 ## Configuration Options
 
-None specific to this check. 
+None specific to this check.

@@ -2,12 +2,11 @@
 
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from unittest.mock import patch, MagicMock
 
 import pytest
 
 from ddlcheck.checks.create_index import CreateIndexCheck
-from ddlcheck.models import CheckResult, Config
+from ddlcheck.models import Config
 
 
 def create_temp_sql_file(content):
@@ -93,11 +92,11 @@ def test_basic_create_index(basic_sql_file):
     """Test detection of a basic CREATE INDEX statement."""
     check = CreateIndexCheck()
     result = check.check_file(basic_sql_file)
-    
+
     # Should identify the issue
     assert result.has_issues()
     assert len(result.issues) == 1
-    
+
     # Check issue details
     issue = result.issues[0]
     assert issue.check_id == "create_index"
@@ -109,7 +108,7 @@ def test_concurrent_create_index(concurrent_sql_file):
     """Test that CONCURRENTLY CREATE INDEX passes."""
     check = CreateIndexCheck()
     result = check.check_file(concurrent_sql_file)
-    
+
     # Should not identify any issues
     assert not result.has_issues()
 
@@ -118,7 +117,7 @@ def test_multiple_indexes(multiple_indexes_sql_file):
     """Test detection of multiple CREATE INDEX statements."""
     check = CreateIndexCheck()
     result = check.check_file(multiple_indexes_sql_file)
-    
+
     # Should identify two issues (the non-concurrent ones)
     assert result.has_issues()
     assert len(result.issues) == 2
@@ -128,7 +127,7 @@ def test_create_unique_index(create_unique_index_sql_file):
     """Test detection of CREATE UNIQUE INDEX."""
     check = CreateIndexCheck()
     result = check.check_file(create_unique_index_sql_file)
-    
+
     # Should identify the issue (unique indexes should also be concurrent)
     assert result.has_issues()
     assert len(result.issues) == 1
@@ -138,7 +137,7 @@ def test_multiple_statement_types(multiple_statement_types_sql_file):
     """Test mixed statement types."""
     check = CreateIndexCheck()
     result = check.check_file(multiple_statement_types_sql_file)
-    
+
     # Should only identify the CREATE INDEX issue
     assert result.has_issues()
     assert len(result.issues) == 1
@@ -149,7 +148,7 @@ def test_disabled_via_config():
     # Create config with this check excluded
     config = Config(excluded_checks={"create_index"})
     check = CreateIndexCheck(config)
-    
+
     # Check should be disabled
     assert not check.enabled
 
@@ -157,4 +156,4 @@ def test_disabled_via_config():
 def test_default_config_is_enabled():
     """Test check is enabled with default config."""
     check = CreateIndexCheck()
-    assert check.enabled 
+    assert check.enabled

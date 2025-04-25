@@ -63,7 +63,7 @@ class MyCustomCheck(Check):
 
         # Implement your custom check logic here
         # Example: Check if a statement contains a specific table
-        
+
         # if "some_condition":
         #     issues.append(
         #         self.create_issue(
@@ -129,4 +129,4 @@ To understand the statement structure for your custom check, it can be helpful t
 
 1. Use print debugging: `print(stmt)` to see the full structure
 2. Check existing checks for similar SQL statements
-3. Refer to the [PostgreSQL parser source code](https://github.com/postgres/postgres/blob/master/src/include/nodes/parsenodes.h) for detailed node definitions 
+3. Refer to the [PostgreSQL parser source code](https://github.com/postgres/postgres/blob/master/src/include/nodes/parsenodes.h) for detailed node definitions

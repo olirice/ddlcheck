@@ -1,1 +1,1 @@
-"""Tests for DDLCheck checks.""" 
+"""Tests for DDLCheck checks."""
